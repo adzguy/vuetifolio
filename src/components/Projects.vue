@@ -1,71 +1,80 @@
 <template>
-  <div>
-    <NavBar />
+  <b-container class="height">
+    <header class="py-3">
+      <NavBar />
+    </header>
 
-    <main class="container">
-      <div class="error" v-if="errors">
-        Sorry! It seems we can't fetch data right now 😥
+    <div
+      class="pt-5"
+      style="font-size: 26px; font-weight: 600; color: #2c3e50"
+      v-if="errors"
+    >
+      Sorry! It seems we can't fetch data right now 😥
+    </div>
+
+    <div v-else>
+      <div
+        class="pt-5"
+        style="font-size: 26px; font-weight: 600; color: #2c3e50"
+        v-if="loading"
+      >
+        😴 Loading ...
       </div>
-
-      <section id="portfolio" v-else>
-        <div class="loading" v-if="loading">😴 Loading ...</div>
-        <div class="projects" v-else>
-          <div
+      <div v-else>
+        <h2>Fetched Repository details from GitHub API</h2>
+        <div class="row row-cols-1 row-cols-md-3">
+          <Card
             v-for="project in projectsList"
             :key="project.id"
-            class="card__custom"
-          >
-            <div class="card__custom__text">
-              <div>
-                <h3>{{ project.name }}</h3>
-                <p>{{ project.description }}</p>
-              </div>
+            :project="project"
+          />
+        </div>
 
-              <div class="meta__data d_flex">
-                <div class="date">
-                  <h5>Updated at</h5>
-                  <div>{{ new Date(project.updated_at).toDateString() }}</div>
-                </div>
-                <b-avatar :src="project.owner.avatar_url" size="6em"></b-avatar>
-              </div>
-            </div>
-            <div class="card__custom__img"></div>
-            <div class="card_custom__button">
-              <a :href="project.html_url" target="_blank"> Code </a>
-            </div>
-          </div>
-
-          <div style="text-align: center; width: 100%" v-if="!loading">
-            <div v-if="projectsList.length < projects.length">
-              <button class="btn_load_more" v-on:click="loadMore()">
+        <div v-if="!loading">
+          <div v-if="projectsList.length < projects.length" class="m-3">
+            <div>
+              <b-button block v-on:click="loadMore()" variant="primary">
                 Load More
-              </button>
-            </div>
-            <div v-else>
-              <a href="" target="_blank" rel="noopener noreferrer"
-                >Visit My GitHub</a
-              >
+              </b-button>
             </div>
           </div>
-
-          <div id="">
-            <h2>Development Skills</h2>
-            <ul class="">
-              <li v-for="(skill, index) in skills" :key="index">{{ skill }}</li>
-            </ul>
+          <div v-else>
+            <a
+              href="https://github.com/adzguy"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="pt-5"
+              style="font-size: 26px; font-weight: 600; color: #2c3e50"
+              >Visit My GitHub</a
+            >
           </div>
         </div>
-      </section>
-    </main>
-  </div>
+
+        <div>
+          <h2>Development Skills</h2>
+          <b-list-group horizontal="sm" class="justify-content-center p-2">
+            <b-list-group-item
+              pill
+              class="mx-1 rounded-pill"
+              style="color: rgb(55, 55, 117)"
+              v-for="(skill, index) in skills"
+              :key="index"
+              >{{ skill }}</b-list-group-item
+            >
+          </b-list-group>
+        </div>
+      </div>
+    </div>
+  </b-container>
 </template>
 
 <script>
 import NavBar from "./NavBar";
+import Card from "./Card";
 
 export default {
   name: "projects",
-  components: { NavBar },
+  components: { NavBar, Card },
   data() {
     return {
       data: [],
@@ -106,11 +115,10 @@ export default {
     fetchData: function () {
       this.axios
         .get(
-          `https://api.github.com/users/fbhood/repos?per_page=${this.perPage}&page=${this.page}`
+          `https://api.github.com/users/adzguy/repos?per_page=${this.perPage}&page=${this.page}`
         )
         .then((response) => {
           this.projects = response.data;
-          console.log(this.projects);
           this.projects.forEach((project) => {
             if (
               project.language !== null &&
@@ -143,3 +151,19 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.height {
+  min-height: 96vh !important;
+}
+
+h2 {
+  font-size: 36px;
+  font-weight: 900;
+  color: #2c3e50;
+}
+p {
+  font-size: 22px;
+  font-weight: 100;
+}
+</style>

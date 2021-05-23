@@ -1,5 +1,5 @@
 <template>
-  <b-container class="pt-5">
+  <b-container class="height">
     <b-avatar size="8em" class="animate__animated animate__pulse"></b-avatar>
     <div class="animate__animated animate__pulse">
       <h1>Vuetifolio</h1>
@@ -37,5 +37,9 @@ p {
 }
 .skills:hover {
   color: brown;
+}
+.height {
+  height: 96vh !important;
+  padding: 20%;
 }
 </style>

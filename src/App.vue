@@ -1,12 +1,8 @@
 <template>
-  <body class="d-flex flex-column h-100">
-    <div id="app">
-      <main class="flex-shrink-0 container mt-5">
-        <router-view></router-view>
-      </main>
-    </div>
+  <div id="app">
+    <router-view></router-view>
     <Footer />
-  </body>
+  </div>
 </template>
 
 <script>
@@ -23,9 +19,7 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  height: 95vh;
-  min-height: 600px;
   color: #2c3e50;
-  background-color: rgba(0, 0, 255, 0.1);
+  background-color: #dee0e4;
 }
 </style>
