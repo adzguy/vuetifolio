@@ -3,7 +3,7 @@
     <b-avatar size="8em" class="animate__animated animate__pulse"></b-avatar>
     <div class="animate__animated animate__pulse">
       <h1>Vuetifolio</h1>
-      <p>VueJS, VueRouter, BootstrapVue, Axios, GitHub API, and GitHub Pages</p>
+      <p>VueJS, BootstrapVue, Axios, GitHub API, and GitHub Pages</p>
     </div>
     <div class="animate__animated animate__backInUp">
       <router-link to="/projects" class="skills">Projects/Skills</router-link>
